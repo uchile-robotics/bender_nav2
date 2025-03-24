@@ -2,6 +2,7 @@ ARG BASE_OS=ubuntu:20.04
 FROM ${BASE_OS}
 
 ARG DEBIAN_FRONTEND=noninteractive
+ARG NTRYPT=service ssh restart && bash
 
 # Update system packages
 RUN apt-get update && apt-get -y full-upgrade
@@ -9,7 +10,7 @@ RUN apt-get update && apt-get -y full-upgrade
 # Install base dependencies
 RUN apt-get update && apt-get install -y \
     git wget dbus-x11 lxqt-core tigervnc-standalone-server openssh-server \
-    vim curl python3-pip software-properties-common tmux make g++
+    vim curl python3-pip software-properties-common tmux make g++ doxygen build-essential
 
 # CUDA environment setup
 # ENV PATH=/usr/local/cuda/bin:$PATH
@@ -75,9 +76,9 @@ RUN sed -i 's/#PermitRootLogin .*/PermitRootLogin yes/' /etc/ssh/sshd_config
 RUN echo "root:docker" | chpasswd
 EXPOSE 22
 
-COPY ./ros_entrypoint.sh ./ros_entrypoint.sh
+# COPY ./ros_entrypoint.sh ./ros_entrypoint.sh
 # SSH and bash entrypoint
-ENTRYPOINT service ssh restart && bash
+ENTRYPOINT ${NTRYPT}
 
 # NVIDIA container runtime and libraries
 # ENV NVIDIA_VISIBLE_DEVICES all

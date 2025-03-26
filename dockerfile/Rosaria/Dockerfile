@@ -78,7 +78,7 @@ EXPOSE 22
 
 # COPY ./ros_entrypoint.sh ./ros_entrypoint.sh
 # SSH and bash entrypoint
-ENTRYPOINT ${NTRYPT}
+ENTRYPOINT ["bash", "-c", "service ssh restart && exec bash"]
 
 # NVIDIA container runtime and libraries
 # ENV NVIDIA_VISIBLE_DEVICES all

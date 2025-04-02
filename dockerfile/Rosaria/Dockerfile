@@ -20,8 +20,9 @@ RUN apt-get update && apt-get install -y ros-noetic-ros-base
 # Install ROS dependencies
 RUN apt-get update && apt-get install -y \
     python3-rosdep python3-rosinstall python3-rosinstall-generator python3-wstool build-essential python3-empy \
-    ros-noetic-map-server ros-noetic-amcl ros-noetic-urg-node ros-noetic-gmapping ros-noetic-urdf ros-noetic-xacro ros-noetic-tf2 \
-    ros-noetic-controller-manager ros-noetic-robot-state-publisher ros-noetic-joint-state-publisher
+    ros-noetic-map-server ros-noetic-amcl ros-noetic-urg-node ros-noetic-gmapping ros-noetic-urdf ros-noetic-xacro \
+    ros-noetic-tf2 ros-noetic-controller-manager ros-noetic-robot-state-publisher ros-noetic-joint-state-publisher \
+    ros-noetic-teleop-twist-keyboard 
 
 # Initialize rosdep and update
 RUN rosdep init && rosdep update

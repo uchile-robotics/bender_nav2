@@ -50,4 +50,3 @@ EXPOSE 22
 
 ENTRYPOINT ["bash", "-c", "service ssh restart && exec bash"]
 RUN echo "source /opt/ros/noetic/setup.bash\nsource /home/rosaria/devel/setup.bash" >> /root/.bashrc
-

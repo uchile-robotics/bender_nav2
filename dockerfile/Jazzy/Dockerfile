@@ -11,7 +11,7 @@ RUN apt-get update && apt-get -y full-upgrade
 RUN apt-get update && apt-get install locales
 RUN locale-gen en_US en_US.UTF-8
 RUN update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8
-ENV LANG en_US.UTF-8
+ENV LANG=en_US.UTF-8
 
 # base dependencies
 RUN apt update && apt upgrade -y
@@ -31,22 +31,34 @@ RUN apt-get install -y ros-jazzy-desktop
 
 #ROS2 dev tools
 RUN apt-get update && apt-get install -y \
-  python3-flake8-blind-except \
-  python3-flake8-class-newline \
-  python3-flake8-deprecated \
-  python3-mypy \
-  python3-pip \
-  python3-pytest \
-  python3-pytest-cov \
-  python3-pytest-mock \
-  python3-pytest-repeat \
-  python3-pytest-rerunfailures \
-  python3-pytest-runner \
-  python3-pytest-timeout \
-  ros-dev-tools
+    python3-flake8-blind-except \
+    python3-flake8-class-newline \
+    python3-flake8-deprecated \
+    python3-mypy \
+    python3-pip \
+    python3-pytest \
+    python3-pytest-cov \
+    python3-pytest-mock \
+    python3-pytest-repeat \
+    python3-pytest-rerunfailures \
+    python3-pytest-runner \
+    python3-pytest-timeout \
+    ros-dev-tools
 
 
-RUN echo "source /opt/ros/jazzy/setup.bash" >> ~/.bashrc
+WORKDIR /usr/local
+RUN git clone https://github.com/reedhedges/AriaCoda.git && \
+    cd AriaCoda &&\
+    make clean && \
+    make -j
+
+WORKDIR /home
+RUN mkdir -p base_controller/src && cd base_controller/src
+WORKDIR /home/base_controller/src
+RUN git clone https://github.com/ruipaulorocha/rosaria2.git 
+WORKDIR /home/base_controller
+RUN /bin/bash -c "source /opt/ros/jazzy/setup.bash && colcon build --cmake-clean-cache --packages-select rosaria --symlink-install"
+RUN echo "source /opt/ros/jazzy/setup.bash\nsource /home/base_controller/install/setup.bash" >> /root/.bashrc
 
 
 # Gazebo
@@ -67,4 +79,4 @@ RUN echo "root:docker"|chpasswd
 
 EXPOSE 22
 
-ENTRYPOINT service ssh restart && bash
+ENTRYPOINT ["bash", "-c", "service ssh restart && exec bash"]

@@ -43,21 +43,25 @@ RUN apt-get update && apt-get install -y \
     python3-pytest-rerunfailures \
     python3-pytest-runner \
     python3-pytest-timeout \
-    ros-dev-tools
+    ros-dev-tools \
+    doxygen
 
-
-WORKDIR /usr/local
-RUN git clone https://github.com/reedhedges/AriaCoda.git && \
-    cd AriaCoda &&\
-    make clean && \
-    make -j
 
 WORKDIR /home
 RUN mkdir -p base_controller/src && cd base_controller/src
+RUN git clone https://github.com/reedhedges/AriaCoda.git
+WORKDIR /home/AriaCoda
+RUN make -j 
+RUN make install
+
+
+# RUN export ARIA_DIR=/usr/local/Aria
+# RUN export CMAKE_PREFIX_PATH=$ARIA_DIR:$CMAKE_PREFIX_PATH
+    
 WORKDIR /home/base_controller/src
 RUN git clone https://github.com/ruipaulorocha/rosaria2.git 
 WORKDIR /home/base_controller
-RUN /bin/bash -c "source /opt/ros/jazzy/setup.bash && colcon build --cmake-clean-cache --packages-select rosaria --symlink-install"
+RUN /bin/bash -c "source /opt/ros/jazzy/setup.bash && colcon build --cmake-clean-cache --symlink-install"
 RUN echo "source /opt/ros/jazzy/setup.bash\nsource /home/base_controller/install/setup.bash" >> /root/.bashrc
 
 

@@ -26,7 +26,7 @@ git clone https://github.com/uchile-robotics/bender_nav2.git
 cd bender_nav2/dockerfile/Rosaria
 sudo docker build -t rosaria2 .
 ```
-Then you must wait for the docker image to build. After that step, check if the pioneer is connected to your PC.
+Then you must wait for the docker image to build. After that step, check if Bender's base is connected to your PC via USB
 
 ```bash
 sudo docker run -dit --device=/dev/ttyUSB0 --name rosaria2_container rosaria2 tail -f /dev/null

@@ -44,7 +44,9 @@ RUN apt-get update && apt-get install -y \
     python3-pytest-runner \
     python3-pytest-timeout \
     ros-dev-tools \
-    doxygen
+    doxygen \
+    ros-jazzy-teleop-twist-keyboard
+    
 
 
 WORKDIR /home

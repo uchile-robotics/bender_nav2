@@ -24,29 +24,33 @@ The rest of requirements are installed automatically when the docker image is bu
 ```bash
 git clone https://github.com/uchile-robotics/bender_nav2.git
 cd bender_nav2/dockerfile/Rosaria
-sudo docker build -t ariacoda .
+sudo docker build -t rosaria2 .
 ```
 Then you must wait for the docker image to build. After that step, check if the pioneer is connected to your PC.
 
 ```bash
-sudo docker run -dit --device=/dev/ttyUSB0 --name ariacoda_container ariacoda tail -f /dev/null
+sudo docker run -dit --device=/dev/ttyUSB0 --name rosaria2_container rosaria2 tail -f /dev/null
 
-sudo docker start -i ariacoda_container
+sudo docker start -i rosaria2_container
 
-sudo docker exec -it ariacoda_container /bin/bash
+sudo docker exec -it rosaria2_container /bin/bash
 ```
 
 In the same terminal that you ran the last command, you must run:
 
 ```bash
-roscore
+ros2 launch rosaria2 rosaria2.launch.py # inside the same terminal that you ran the last command 
+
 ```
 Then, in another terminal, run:
 ```bash
-sudo docker exec -it ariacoda_container /bin/bash
-rosrun rosaria RosAria _port:=/dev/ttyUSB0 # inside the same terminal that you ran the last command 
+sudo docker exec -it rosaria2_container /bin/bash
+```
+Inside that terminal run `ros2 topic list` and search for a topic called something along the lines of  `/AriaCoda/cmd_vel`. After that, you must change the name of the topic that teleop_twist_keyboard is publishing to. In order to do that, you must run this command:
+```bash
+ros2 run teleop_twist_keyboard teleop_twist_keyboard --ros-args --remap cmd_vel:=<my_cmd_vel>
+
 ```
 
 With that you can control Bender's base
 
-TODO: queda pendiente ejecutar 2 terminales, 1 con roscore y otra con 

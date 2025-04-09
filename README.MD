@@ -29,9 +29,7 @@ sudo docker build -t rosaria2 .
 Then you must wait for the docker image to build. After that step, check if Bender's base is connected to your PC via USB
 
 ```bash
-sudo docker run -dit --device=/dev/ttyUSB0 --name rosaria2_container rosaria2 tail -f /dev/null
-
-sudo docker start -i rosaria2_container
+docker run -dit --device=/dev/ttyUSB0 --network host -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=unix$DISPLAY --name rosaria2_container rosaria2
 
 sudo docker exec -it rosaria2_container /bin/bash
 ```

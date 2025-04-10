@@ -3,8 +3,8 @@ services:
     image: rosaria2
     container_name: rosaria2_container
     network_mode: host
-    # devices:
-    #   - /dev/ttyUSB0:/dev/ttyUSB0
+    devices:
+      - /dev/ttyUSB0:/dev/ttyUSB0
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix
       - ~/.config/ros/cyclonedds.xml:/cyclonedds.xml

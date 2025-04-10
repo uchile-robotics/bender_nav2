@@ -1,4 +1,4 @@
-ARG BASE_OS=nvcr.io/nvidia/cuda:12.5.1-base-ubuntu24.04
+ARG BASE_OS=ubuntu:24.04
 
 FROM ${BASE_OS}
 
@@ -26,8 +26,9 @@ RUN curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o 
 RUN echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(. /etc/os-release && echo $UBUNTU_CODENAME) main" | tee /etc/apt/sources.list.d/ros2.list > /dev/null
 
 RUN apt-get update && apt-get -y full-upgrade
+RUN apt update --fix-missing
 
-RUN apt-get install -y ros-jazzy-desktop
+RUN apt-get install -y ros-jazzy-ros-base
 
 #ROS2 dev tools
 RUN apt-get update && apt-get install -y \
@@ -43,9 +44,11 @@ RUN apt-get update && apt-get install -y \
     python3-pytest-rerunfailures \
     python3-pytest-runner \
     python3-pytest-timeout \
-    ros-dev-tools \
     doxygen \
-    ros-jazzy-teleop-twist-keyboard
+    ros-dev-tools \
+    libboost-dev \
+    ros-jazzy-teleop-twist-keyboard \
+    ros-jazzy-rmw-cyclonedds-cpp
     
 
 
@@ -63,8 +66,9 @@ RUN make install
 WORKDIR /home/base_controller/src
 RUN git clone https://github.com/ruipaulorocha/rosaria2.git 
 WORKDIR /home/base_controller
-RUN /bin/bash -c "source /opt/ros/jazzy/setup.bash && colcon build --cmake-clean-cache --symlink-install"
+RUN /bin/bash -c "source /opt/ros/jazzy/setup.bash && colcon build --symlink-install"
 RUN echo "source /opt/ros/jazzy/setup.bash\nsource /home/base_controller/install/setup.bash" >> /root/.bashrc
+RUN echo "alias c='clear'" >> /root/.bashrc
 
 
 # Gazebo

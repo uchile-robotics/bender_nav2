@@ -1,0 +1,17 @@
+services:
+  rosaria2_container:
+    image: rosaria2
+    container_name: rosaria2_container
+    network_mode: host
+    # devices:
+    #   - /dev/ttyUSB0:/dev/ttyUSB0
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - ~/.config/ros/cyclonedds.xml:/cyclonedds.xml
+      - ~/bender_jazzy/bender_nav2:/home/bender_jazzy/bender_nav2
+    environment:
+      - DISPLAY=unix$DISPLAY
+      - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+      - CYCLONEDDS_URI=/cyclonedds.xml
+    stdin_open: true
+    tty: true

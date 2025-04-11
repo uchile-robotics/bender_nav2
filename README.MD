@@ -25,7 +25,7 @@ The rest of requirements are installed automatically when the docker image is bu
 mkdir bender_jazzy && cd bender_jazzy
 git clone https://github.com/uchile-robotics/bender_nav2.git
 cd bender_nav2/dockerfile/Rosaria
-sudo docker build -t rosaria2 .
+sudo docker compose build rosaria2_container
 ```
 Then you must set up the communication with the docker container
 ```bash
@@ -46,13 +46,15 @@ In the same terminal that you ran the last command, you must run:
 ros2 launch rosaria2 rosaria2.launch.py
 
 ```
-Then, in another terminal, to teleoperate Bender's base via the keyboard, you must run :
-
+Connect the hokuyo lidar to your pc, then run this command
 ```bash
 sudo docker exec -it rosaria2_container /bin/bash
-ros2 run teleop_twist_keyboard teleop_twist_keyboard
+ros2 launch urg_node2 urg_node2.launch.py
 
 ```
 
-With that you can control Bender's base
+Sahian, queda pendiente definir la pose del hokuyo en la base (la transformada, si le preguntas al gonz va a cachar)
+ĺuego de eso puedes partir con el gmapping, para eso para estar más comodo puedes usar el paquete teleop_twist_joy
+lo tendrías que instalar dentro del contenedor o por fuera, da lo mismo.
 
+esopo

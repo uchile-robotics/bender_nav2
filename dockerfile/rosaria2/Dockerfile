@@ -15,7 +15,7 @@ ENV LANG=en_US.UTF-8
 
 # base dependencies
 RUN apt update && apt upgrade -y
-RUN apt-get install -y git wget dbus-x11 lxqt-core tigervnc-standalone-server openssh-server vim curl python3-pip
+RUN apt-get install -y git wget dbus-x11 lxqt-core tigervnc-standalone-server openssh-server vim curl python3-pip nano
 
 # ROS2
 
@@ -53,22 +53,24 @@ RUN apt-get update && apt-get install -y \
 
 
 WORKDIR /home
-RUN mkdir -p base_controller/src && cd base_controller/src
-RUN git clone https://github.com/reedhedges/AriaCoda.git
-WORKDIR /home/AriaCoda
+RUN mkdir -p base_controller/src
+WORKDIR /home/base_controller/src
+RUN git clone https://github.com/reedhedges/AriaCoda.git && \ 
+    git clone https://github.com/ruipaulorocha/rosaria2.git && \
+    git clone --recursive https://github.com/Hokuyo-aut/urg_node2.git
+WORKDIR /home/base_controller/src/AriaCoda
 RUN make -j 
 RUN make install
 
-
-# RUN export ARIA_DIR=/usr/local/Aria
-# RUN export CMAKE_PREFIX_PATH=$ARIA_DIR:$CMAKE_PREFIX_PATH
-    
 WORKDIR /home/base_controller/src
-RUN git clone https://github.com/ruipaulorocha/rosaria2.git 
+RUN rosdep init
+RUN rosdep update && rosdep install -i --from-paths urg_node2 rosaria2 --rosdistro=jazzy
 WORKDIR /home/base_controller
 RUN /bin/bash -c "source /opt/ros/jazzy/setup.bash && colcon build --symlink-install"
 RUN echo "source /opt/ros/jazzy/setup.bash\nsource /home/base_controller/install/setup.bash" >> /root/.bashrc
 RUN echo "alias c='clear'" >> /root/.bashrc
+RUN sed -i 's/params_ether.yaml/params_serial.yaml/' /home/base_controller/src/urg_node2/launch/urg_node2.launch.py
+
 
 
 # Gazebo

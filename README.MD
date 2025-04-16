@@ -30,6 +30,7 @@ sudo docker compose build rosaria2_container
 Then you must set up the communication with the docker container
 ```bash
 mkdir -p ~/.config/ros
+cd ~/bender_jazzy/bender_nav2
 cp cyclonedds.xml ~/.config/ros
 export CYCLONEDDS_URI=${HOME}/.config/ros/cyclonedds.xml
 ```

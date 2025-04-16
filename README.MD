@@ -48,7 +48,7 @@ In the same terminal that you ran the last command, you must run:
 ros2 launch rosaria2 rosaria2.launch.py
 
 ```
-Connect the hokuyo lidar to your pc, then run this command
+Connect the hokuyo lidar to your pc, then run this command in another terminal
 ```bash
 sudo docker exec -it rosaria2_container /bin/bash
 ros2 launch urg_node2 urg_node2.launch.py

@@ -37,7 +37,8 @@ export CYCLONEDDS_URI=${HOME}/.config/ros/cyclonedds.xml
 Then you must wait for the docker image to build. After that step, check if Bender's base is connected to your PC via USB
 
 ```bash
-sudo docker compose -d --remove-orphans
+cd dockerfile/rosaria2
+sudo docker compose up -d --remove-orphans
 sudo docker exec -it rosaria2_container /bin/bash
 ```
 

@@ -34,7 +34,7 @@ cd ~/bender_jazzy/bender_nav2
 cp cyclonedds.xml ~/.config/ros
 export CYCLONEDDS_URI=${HOME}/.config/ros/cyclonedds.xml
 ```
-Then you must wait for the docker image to build. After that step, check if Bender's base is connected to your PC via USB
+Then you must wait for the docker image to build. After that step, check if Bender's base is connected to your PC via USB (and the hokuyo)
 
 ```bash
 cd dockerfile/rosaria2

@@ -30,9 +30,8 @@ sudo docker compose build rosaria2_container
 Then you must set up the communication with the docker container
 ```bash
 mkdir -p ~/.config/ros
-cd ~/bender_jazzy/bender_nav2
+cd ~/bender_jazzy/bender_nav2/dockerfile/rosaria2/config
 cp cyclonedds.xml ~/.config/ros
-export CYCLONEDDS_URI=${HOME}/.config/ros/cyclonedds.xml
 ```
 Then you must wait for the docker image to build. After that step, check if Bender's base is connected to your PC via USB (and the hokuyo)
 

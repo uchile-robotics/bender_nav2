@@ -65,6 +65,7 @@ RUN make -j
 RUN make install
 
 WORKDIR /home/base_controller/src
+RUN rm -r AriaCoda
 RUN rosdep init
 RUN rosdep update && rosdep install -i --from-paths urg_node2 rosaria2 --rosdistro=jazzy
 RUN sed -i 's/params_ether.yaml/params_serial.yaml/' urg_node2/launch/urg_node2.launch.py

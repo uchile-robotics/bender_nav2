@@ -12,6 +12,7 @@ services:
     volumes:
       - ~/.config/ros/cyclonedds.xml:/cyclonedds.xml
       - ~/bender_jazzy/bender_nav2:/home/bender_jazzy/bender_nav2
+      - ~/bender_bringup:/home/base_controller/src/bender_bringup
     environment:
       - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
       - CYCLONEDDS_URI=/cyclonedds.xml

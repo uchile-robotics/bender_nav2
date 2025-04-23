@@ -30,7 +30,6 @@ RUN apt update --fix-missing
 
 RUN apt-get install -y ros-jazzy-ros-base
 
-#ROS2 dev tools
 RUN apt-get update && apt-get install -y \
     python3-flake8-blind-except \
     python3-flake8-class-newline \
@@ -68,8 +67,7 @@ RUN make install
 WORKDIR /home/base_controller/src
 RUN rosdep init
 RUN rosdep update && rosdep install -i --from-paths urg_node2 rosaria2 --rosdistro=jazzy
-RUN mv /home/base_controller/src/urg_node2/launch/urg_node2.launch.py /home/base_controller/src/urg_node2/launch/OLD_urg_node2.launch.py
-COPY /config/urg_node2.launch.py /home/base_controller/src/urg_node2/launch/urg_node2.launch.py
+RUN sed -i 's/params_ether.yaml/params_serial.yaml/' urg_node2/launch/urg_node2.launch.py
 WORKDIR /home/base_controller
 RUN /bin/bash -c "source /opt/ros/jazzy/setup.bash && colcon build --symlink-install"
 RUN echo "source /opt/ros/jazzy/setup.bash\nsource /home/base_controller/install/setup.bash" >> /root/.bashrc

@@ -65,24 +65,13 @@ RUN make install
 WORKDIR /home/base_controller/src
 RUN rosdep init
 RUN rosdep update && rosdep install -i --from-paths urg_node2 rosaria2 --rosdistro=jazzy
+RUN mv /home/base_controller/src/urg_node2/launch/urg_node2.launch.py /home/base_controller/src/urg_node2/launch/OLD_urg_node2.launch.py
+COPY /config/urg_node2.launch.py /home/base_controller/src/urg_node2/launch/urg_node2.launch.py
 WORKDIR /home/base_controller
 RUN /bin/bash -c "source /opt/ros/jazzy/setup.bash && colcon build --symlink-install"
 RUN echo "source /opt/ros/jazzy/setup.bash\nsource /home/base_controller/install/setup.bash" >> /root/.bashrc
 RUN echo "alias c='clear'" >> /root/.bashrc
-RUN sed -i 's/params_ether.yaml/params_serial.yaml/' /home/base_controller/src/urg_node2/launch/urg_node2.launch.py
 
-
-
-# Gazebo
-
-# RUN apt-get update && apt-get -y full-upgrade
-# RUN apt-get install -y ros-jazzy-ros-gz
-
-# PyTorch
-# RUN pip3 install torch torchvision torchaudio --break-system-packages
-
-# MuJoCo
-# RUN pip3 install mujoco --break-system-packages
 
 # authorize SSH connection with root account
 RUN sed -i 's/#PermitRootLogin .*/PermitRootLogin yes/' /etc/ssh/sshd_config

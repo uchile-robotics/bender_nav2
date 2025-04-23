@@ -48,7 +48,10 @@ RUN apt-get update && apt-get install -y \
     ros-dev-tools \
     libboost-dev \
     ros-jazzy-teleop-twist-keyboard \
-    ros-jazzy-rmw-cyclonedds-cpp
+    ros-jazzy-rmw-cyclonedds-cpp \
+    ros-jazzy-navigation2 \
+    ros-jazzy-nav2-bringup \
+    ros-jazzy-slam-toolbox
     
 
 

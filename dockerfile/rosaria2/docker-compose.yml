@@ -14,6 +14,6 @@ services:
       - ~/bender_bringup:/home/base_controller/src/bender_bringup
     environment:
       - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
-      - CYCLONEDDS_URI=/cyclonedds.xml
+      - CYCLONEDDS_URI=file:///cyclonedds.xml
     stdin_open: true
     tty: true

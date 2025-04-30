@@ -21,7 +21,7 @@ options = {
   map_builder = MAP_BUILDER,
   trajectory_builder = TRAJECTORY_BUILDER,
   map_frame = "map",
-  tracking_frame = "imu_link",
+  tracking_frame = "base_link",
   published_frame = "odom",
   odom_frame = "odom",
   provide_odom_frame = false,
@@ -42,7 +42,6 @@ options = {
   fixed_frame_pose_sampling_ratio = 1.,
   imu_sampling_ratio = 1.,
   landmarks_sampling_ratio = 1.,
-  use_imu_data = false,
 }
 
 MAP_BUILDER.use_trajectory_builder_2d = true

@@ -70,14 +70,14 @@ RUN rm -r AriaCoda
 RUN rosdep init
 RUN rosdep update && rosdep install -i --from-paths urg_node2 rosaria2 --rosdistro=jazzy
 RUN sed -i 's/params_ether.yaml/params_serial.yaml/' urg_node2/launch/urg_node2.launch.py
-COPY config/cyclonedds.xml /
-COPY config/cartographer_config.lua /opt/ros/jazzy/share/cartographer/configuration_files 
 WORKDIR /home/base_controller
 RUN /bin/bash -c "source /opt/ros/jazzy/setup.bash && colcon build --symlink-install"
 RUN echo "source /opt/ros/jazzy/setup.bash\nsource /home/base_controller/install/setup.bash" >> /root/.bashrc
 RUN echo "alias c='clear'" >> /root/.bashrc
 
-
+# Config files for cartographer
+COPY config/cyclonedds.xml /
+COPY config/cartographer_config.lua /opt/ros/jazzy/share/cartographer/configuration_files 
 # authorize SSH connection with root account
 RUN sed -i 's/#PermitRootLogin .*/PermitRootLogin yes/' /etc/ssh/sshd_config
 

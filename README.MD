@@ -29,7 +29,7 @@ git checkout feat-jazzy
 cd ..
 mkdir bender_jazzy && cd bender_jazzy
 git clone https://github.com/uchile-robotics/bender_nav2.git
-cd ~/bender_nav2/dockerfile/Rosaria
+cd ~/bender_nav2/dockerfile/rosaria2
 sudo docker compose build rosaria2_container
 ```
 

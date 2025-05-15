@@ -50,7 +50,7 @@ RUN apt-get update && apt-get install -y \
     ros-jazzy-rmw-cyclonedds-cpp \
     ros-jazzy-navigation2 \
     ros-jazzy-nav2-bringup \
-    ros-jazzy-slam-toolbox \
+    ros-jazzy-twist-mux \
     ros-jazzy-cartographer-ros
     
 
@@ -67,8 +67,14 @@ RUN make install
 
 WORKDIR /home/base_controller/src
 RUN rm -r AriaCoda
-RUN rosdep init
-RUN rosdep update && rosdep install -i --from-paths urg_node2 rosaria2 --rosdistro=jazzy
+
+RUN rosdep init && \
+    rosdep fix-permissions && \
+    rosdep update
+
+
+RUN rosdep install -i --from-paths urg_node2 rosaria2 --rosdistro=jazzy -y
+
 RUN sed -i 's/params_ether.yaml/params_serial.yaml/' urg_node2/launch/urg_node2.launch.py
 WORKDIR /home/base_controller
 RUN /bin/bash -c "source /opt/ros/jazzy/setup.bash && colcon build --symlink-install"

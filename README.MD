@@ -1,5 +1,5 @@
 # Bender Nav2
-
+# Attention: this repository is deprecated, please see [uchile_system](https://github.com/uchile-robotics/uchile_system)
 ## Table of contents
 - [Bender Nav2](#bender-nav2)
   - [Table of contents](#table-of-contents)
